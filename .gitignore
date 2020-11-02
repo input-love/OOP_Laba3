@@ -30,3 +30,17 @@
 *.exe
 *.out
 *.app
+OOP_Laba3/.vs/OOP_Laba3/v16/.suo
+*.db
+*.ipch
+*.ilk
+*.pdb
+*.sln
+*.user
+*.filters
+*.vcxproj
+*.idb
+*.lastbuildstate
+*.tlog
+*.recipe
+*.log

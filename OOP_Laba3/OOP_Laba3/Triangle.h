@@ -4,5 +4,5 @@
 class Triangle: public Shape {
 public:
 	Triangle();
-	double getArea(const double* arr) override;
+	double getArea() override;
 };

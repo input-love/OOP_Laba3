@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
+#include "Point.h"
 
 class Vector {
 public:
 	Vector();
-	double getVectorLength(double x, double y);
+	double getVectorLength(const Point& first, const Point& second) const;
 };

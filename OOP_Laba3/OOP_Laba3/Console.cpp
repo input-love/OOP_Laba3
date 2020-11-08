@@ -5,10 +5,7 @@ Console::Console() = default;
 void Console::run() {
     setlocale(LC_ALL, "Russian");
 
-    int operation;
     Shape** arr_figures = new Shape* [2];
-    double** arr_vector = new double* [2];
-    Vector vector;
 
     for (int i = 0; i < 2; ++i) {
         char T;
@@ -27,35 +24,82 @@ void Console::run() {
         for (int j = 0; j < count; ++j) {
             cin >> (*arr_figures[i])[j].x >> (*arr_figures[i])[j].y;
         }
-
-        arr_vector[i] = new double[count];
-        for (int j = 0; j < count; ++j) { // Убрать 
-            double x, y;
-            if (j == count - 1) {
-                x = (*arr_figures[i])[0].x - (*arr_figures[i])[j].x;
-                y = (*arr_figures[i])[0].y - (*arr_figures[i])[j].y;
-            } else {
-                x = (*arr_figures[i])[j + 1].x - (*arr_figures[i])[j].x;
-                y = (*arr_figures[i])[j + 1].y - (*arr_figures[i])[j].y;
-            }
-            arr_vector[i][j] = vector.getVectorLength(x, y);
-        }
     }
+
+    int operation, numberOfFigure;
 
     do {
         printMenu();
+
         cin >> operation;
-        int numberOfFigure;
+
         switch (operation) {
         case 1:
-            cout << "У какой фигуры вычилсить площадь? (1) или (2)\n";
+            cout << "У какой фигуры вычислить площадь? (1) или (2)\n";
             cin >> numberOfFigure;
+
             if (numberOfFigure == 1) {
-                cout << arr_figures[0]->getArea(arr_vector[0]) << endl;
+                cout << arr_figures[0]->getArea() << endl;
             } else if (numberOfFigure == 2) {
-                cout << arr_figures[1]->getArea(arr_vector[1]) << endl;
+                cout << arr_figures[1]->getArea() << endl;
             }
             break;
+        case 2:
+            cout << "У какой фигуры вычислить центр тяжести? (1) или (2)\n";
+            cin >> numberOfFigure;
+
+            if (numberOfFigure == 1) {
+                Point point = arr_figures[0]->getCenterOfGravity();
+                cout << point.x << " | " << point.y << endl;
+            } else if (numberOfFigure == 2) {
+                Point point = arr_figures[1]->getCenterOfGravity();
+                cout << point.x << " | " << point.y << endl;
+            }
+            break;
+        case 3:
+            cout << "Какую фигуру перевернуть? (1) или (2)\n";
+            cin >> numberOfFigure;
+
+            int degrees;
+            cout << "Какой угол поворота фигуры?\n";
+            cin >> degrees;
+
+            if (numberOfFigure == 1) {
+                //arr_figures[0]->rotate(degrees);
+            } else if (numberOfFigure == 2) {
+                //arr_figures[1]->rotate(degrees);
+            }
+            break;
+        case 4:
+            cout << "Какую фигуру передвинуть? (1) или (2)\n";
+            cin >> numberOfFigure;
+
+            Point point;
+            cout << "На какие координаты сдвинуть? x | y\n";
+            cin >> point.x >> point.y;
+
+            if (numberOfFigure == 1) {
+                arr_figures[0]->move(point);
+            } else if (numberOfFigure == 2) {
+                arr_figures[1]->move(point);
+            }
+            break;
+        case 5:
+        {
+            double area_first = arr_figures[0]->getArea();
+            double area_second = arr_figures[1]->getArea();
+            string result = arr_figures[0]->compare(area_first, area_second);
+            if (result == "More") {
+                cout << "Площадь 1-ой фигуры больше 2-ой\n";
+            }
+            else if (result == "Less") {
+                cout << "Площадь 1-ой фигуры меньше 2-ой\n";
+            }
+            else {
+                cout << "Площадь 1-ой фигуры и 2-ой - равны\n";
+            }
+            break;
+        }
         default:
             operation = 0;
         }
@@ -79,6 +123,5 @@ void Console::printMenu() {
     cout << "5 - Сравнить фигуры\n";
     cout << "6 - Пересекаются ли фигуры\n";
     cout << "7 - Включены ли фигуры\n";
-    cout << "8 - Вывести координаты фигур\n";
     cout << "0 - Выход\n";
 }

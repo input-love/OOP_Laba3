@@ -45,3 +45,5 @@ OOP_Laba3/.vs/OOP_Laba3/v16/.suo
 *.recipe
 *.log
 *.db-shm
+*.db-wal
+*.opendb

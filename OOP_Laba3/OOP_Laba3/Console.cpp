@@ -85,7 +85,6 @@ void Console::run() {
             }
             break;
         case 5:
-        {
             double area_first = arr_figures[0]->getArea();
             double area_second = arr_figures[1]->getArea();
             string result = arr_figures[0]->compare(area_first, area_second);
@@ -99,7 +98,13 @@ void Console::run() {
                 cout << "Площадь 1-ой фигуры и 2-ой - равны\n";
             }
             break;
-        }
+        case 6:
+            bool result = Operations::IsIntersect(figure1, figure2);
+            if (result) {
+                cout << "Фигуры пересекаются\n";
+            } else {
+                cout << "Фигуры не пересекаются\n";
+            }
         default:
             operation = 0;
         }

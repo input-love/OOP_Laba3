@@ -40,12 +40,15 @@ Point Shape::getCenterOfGravity() const {
 	return point;
 }
 
-/*void Shape::rotate(int degrees) {
-	double angle = AdditionalFunctions::degreesToRadian(degrees);
+void Shape::rotate(int degrees) {
+	Radian radian;
+	Point center;
+	Rounding rounding;
 
-	Point center = getCenterOfGravity();
-	for (int i = 0; i < _numberOfEdges; ++i)
-	{
+	double angle = radian.degreesToRadian(degrees);
+	center = getCenterOfGravity();
+
+	for (int i = 0; i < _numberOfEdges; ++i) {
 		_point[i].x -= center.x;
 		_point[i].y -= center.y;
 
@@ -55,14 +58,13 @@ Point Shape::getCenterOfGravity() const {
 		_point[i].x = tempX + center.x;
 		_point[i].y = tempY + center.y;
 
-		_point[i].x = AdditionalFunctions::rounding(_point[i].x);
-		_point[i].y = AdditionalFunctions::rounding(_point[i].y);
+		_point[i].x = rounding.da(_point[i].x);
+		_point[i].y = rounding.da(_point[i].y);
 	}
-}*/
+}
 
 void Shape::move(const Point& point) {
-	for (int i = 0; i < _numberOfEdges; ++i)
-	{
+	for (int i = 0; i < _numberOfEdges; ++i) {
 		_point[i].x += point.x;
 		_point[i].y += point.y;
 	}
@@ -77,6 +79,22 @@ string Shape::compare(double area_first, double area_second) {
 		return "Equal";
 	}
 }
+
+/*bool Shape::IsIntersect(Shape* first, Shape* second) {
+	Point* coordinatesOfFirst = first->getCoordinates();
+	Point* coordinatesOfSecond = second->getCoordinates();
+	for (int i = 0; i < first->getNumberOfCorners(); ++i) {
+		for (int j = 0; j < second->getNumberOfCorners(); ++j) {
+			if (AdditionalFunctions::isIntersectLines(coordinatesOfFirst[i], coordinatesOfFirst[(i + 1) % first->getNumberOfCorners()],
+				coordinatesOfSecond[j], coordinatesOfSecond[(j + 1) % second->getNumberOfCorners()]))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}*/
+
 
 int Shape::getNumberOfEdges() {
 	return _numberOfEdges;

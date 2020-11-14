@@ -2,9 +2,9 @@
 
 Rounding::Rounding() = default;
 
-double Rounding::da(double number) {
+double Rounding::roundingNumber(double number) {
     double result;
-    if (abs(number - 0) < DIFF) {
+    if (abs(number - 0) < 0.0000000001) {
         result = 0;
     } else {
         result = number;

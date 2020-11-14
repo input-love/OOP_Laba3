@@ -1,10 +1,11 @@
 #pragma once
+#include <iostream>
 #include "Point.h"
 #include "Vector.h"
 #include "Radian.h"
 #include "Rounding.h"
+#include "IntersectLines.h"
 #include "Error.h"
-using std::string;
 
 class Shape { 
 public:
@@ -13,10 +14,10 @@ public:
 	static Shape* createShape(char T); 
 	virtual double getArea() = 0;
 	Point getCenterOfGravity() const;
-	virtual void rotate(int degrees);
+	void rotate(int degrees); // Сделать функции Vector, Radian... - static
 	void move(const Point& point);
-	string compare(double area_first, double area_second); // Пофиксить вирк функции
-	//virtual bool IsIntersect(Shape* first, Shape* second);
+	bool compare(double area_first, double area_second); // пофиксить
+	bool IsIntersect(const Shape& first, const Shape& second);
 	int getNumberOfEdges();
 	virtual Point& operator [] (int i) const;
 protected:

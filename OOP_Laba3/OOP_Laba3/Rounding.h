@@ -1,7 +1,8 @@
 #pragma once
+#include <cmath>
 
 class Rounding {
 public:
 	Rounding();
-	double da(double number);
+	double roundingNumber(double number);
 };

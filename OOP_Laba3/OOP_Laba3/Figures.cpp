@@ -15,7 +15,7 @@ Shape* Shape::createShape(char T) {
 		{
 		shape = new Triangle();
 		}
-		break; 
+		break;
 	case 'R':
 		{
 		shape = new Rectangle();
@@ -58,8 +58,8 @@ void Shape::rotate(int degrees) {
 		_point[i].x = tempX + center.x;
 		_point[i].y = tempY + center.y;
 
-		_point[i].x = rounding.da(_point[i].x);
-		_point[i].y = rounding.da(_point[i].y);
+		_point[i].x = rounding.roundingNumber(_point[i].x);
+		_point[i].y = rounding.roundingNumber(_point[i].y);
 	}
 }
 
@@ -70,30 +70,24 @@ void Shape::move(const Point& point) {
 	}
 }
 
-string Shape::compare(double area_first, double area_second) {
-	if (area_first > area_second) {
-		return "More";
-	} else if (area_first < area_second) {
-		return "Less";
-	} else {
-		return "Equal";
-	}
+bool Shape::compare(double area_first, double area_second) {
+	return area_first > area_second;
 }
 
-/*bool Shape::IsIntersect(Shape* first, Shape* second) {
-	Point* coordinatesOfFirst = first->getCoordinates();
-	Point* coordinatesOfSecond = second->getCoordinates();
-	for (int i = 0; i < first->getNumberOfCorners(); ++i) {
-		for (int j = 0; j < second->getNumberOfCorners(); ++j) {
-			if (AdditionalFunctions::isIntersectLines(coordinatesOfFirst[i], coordinatesOfFirst[(i + 1) % first->getNumberOfCorners()],
-				coordinatesOfSecond[j], coordinatesOfSecond[(j + 1) % second->getNumberOfCorners()]))
-			{
+bool Shape::IsIntersect(const Shape& first, const Shape& second) {
+	IntersectLines intersectLines;
+	int count_first = first._numberOfEdges;
+	int count_second = second._numberOfEdges;
+	for (int i = 0; i < count_first; ++i) {
+		for (int j = 0; j < count_second; ++j) {
+			if (intersectLines.checkLines(first[i], first[(i + 1) % count_first],
+				second[j], second[(j + 1) % count_second])) {
 				return true;
 			}
 		}
 	}
 	return false;
-}*/
+}
 
 
 int Shape::getNumberOfEdges() {

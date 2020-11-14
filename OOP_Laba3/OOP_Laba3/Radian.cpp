@@ -3,7 +3,7 @@
 
 Radian::Radian() = default;
 
-Radian::degreesToRadian(int degrees) {
+double Radian::degreesToRadian(int degrees) {
 	double result = (degrees * 2.0 * asin(1)) / 180;
 	return result;
 }

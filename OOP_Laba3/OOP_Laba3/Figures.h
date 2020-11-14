@@ -14,9 +14,9 @@ public:
 	static Shape* createShape(char T); 
 	virtual double getArea() = 0;
 	Point getCenterOfGravity() const;
-	void rotate(int degrees); // Сделать функции Vector, Radian... - static
+	void rotate(int degrees); 
 	void move(const Point& point);
-	bool compare(double area_first, double area_second); // пофиксить
+	bool compare(double area_first, double area_second);
 	bool IsIntersect(const Shape& first, const Shape& second);
 	int getNumberOfEdges();
 	virtual Point& operator [] (int i) const;

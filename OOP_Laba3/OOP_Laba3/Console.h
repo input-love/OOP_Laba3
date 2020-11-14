@@ -2,7 +2,6 @@
 #include <iostream>
 #include <clocale>
 #include "Figures.h"
-#include "Vector.h"
 
 class Console {
 public:

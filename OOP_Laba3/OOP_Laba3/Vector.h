@@ -5,5 +5,5 @@
 class Vector {
 public:
 	Vector();
-	double getVectorLength(const Point& first, const Point& second) const;
+	static double getVectorLength(const Point& first, const Point& second);
 };

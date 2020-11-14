@@ -3,5 +3,5 @@
 class Radian {
 public:
 	Radian();
-	double degreesToRadian(int degrees);
+	static double degreesToRadian(int degrees);
 };

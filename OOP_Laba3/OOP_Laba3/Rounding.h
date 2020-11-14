@@ -4,5 +4,5 @@
 class Rounding {
 public:
 	Rounding();
-	double roundingNumber(double number);
+	static double roundingNumber(double number);
 };

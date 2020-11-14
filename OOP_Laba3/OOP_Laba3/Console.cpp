@@ -5,8 +5,8 @@ Console::Console() = default;
 void Console::run() {
     setlocale(LC_ALL, "Russian");
 
-    Shape* first_figure = nullptr;
-    Shape* second_figure = nullptr;
+    Shape* figure_first = nullptr;
+    Shape* figure_second = nullptr;
 
     // ---------------------------------------------------
     char T;
@@ -14,32 +14,32 @@ void Console::run() {
     std::cin >> T;
 
     try {
-        first_figure = Shape::createShape(T);
+        figure_first = Shape::createShape(T);
     } catch (const std::exception& exept) {
         std::cout << exept.what() << std::endl;
     }
 
-    int count = first_figure->getNumberOfEdges();
+    int count = figure_first->getNumberOfEdges();
 
     std::cout << "Введите координаты фигуры(x, y): " << std::endl;
     for (int i = 0; i < count; ++i) {
-        std::cin >> first_figure->operator[](i).x >> first_figure->operator[](i).y;
+        std::cin >> figure_first->operator[](i).x >> figure_first->operator[](i).y;
     }
     // ---------------------------------------------------
     std::cout << "Какую фигуру хотите создать?(T) - треугольник, (R) - прямоугольник\n";
     std::cin >> T;
 
     try {
-        second_figure = Shape::createShape(T);
+        figure_second = Shape::createShape(T);
     } catch (const std::exception& exept) {
         std::cout << exept.what() << std::endl;
     }
 
-    count = second_figure->getNumberOfEdges();
+    count = figure_second->getNumberOfEdges();
 
     std::cout << "Введите координаты фигуры(x, y): " << std::endl;
     for (int i = 0; i < count; ++i) {
-        std::cin >> second_figure->operator[](i).x >> second_figure->operator[](i).y;
+        std::cin >> figure_second->operator[](i).x >> figure_second->operator[](i).y;
     }
     // ---------------------------------------------------
 
@@ -57,9 +57,9 @@ void Console::run() {
             std::cin >> numberOfFigure;
 
             if (numberOfFigure == 1) {
-                std::cout << first_figure->getArea() << std::endl;
+                std::cout << figure_first->getArea() << std::endl;
             } else if (numberOfFigure == 2) {
-                std::cout << second_figure->getArea() << std::endl;
+                std::cout << figure_second->getArea() << std::endl;
             }
             break;
         }
@@ -69,10 +69,10 @@ void Console::run() {
             std::cin >> numberOfFigure;
 
             if (numberOfFigure == 1) {
-                Point point = first_figure->getCenterOfGravity();
+                Point point = figure_first->getCenterOfGravity();
                 std::cout << point.x << " | " << point.y << std::endl;
             } else if (numberOfFigure == 2) {
-                Point point = second_figure->getCenterOfGravity();
+                Point point = figure_second->getCenterOfGravity();
                 std::cout << point.x << " | " << point.y << std::endl;
             }
             break;
@@ -87,9 +87,9 @@ void Console::run() {
             std::cin >> degrees;
 
             if (numberOfFigure == 1) {
-                first_figure->rotate(degrees);
+                figure_first->rotate(degrees);
             } else if (numberOfFigure == 2) {
-                second_figure->rotate(degrees);
+                figure_second->rotate(degrees);
             }
             break;
         }
@@ -103,17 +103,17 @@ void Console::run() {
             std::cin >> point.x >> point.y;
 
             if (numberOfFigure == 1) {
-                first_figure->move(point);
+                figure_first->move(point);
             } else if (numberOfFigure == 2) {
-                second_figure->move(point);
+                figure_second->move(point);
             }
             break;
         }
         case 5:
         {
-            double area_first = first_figure->getArea();
-            double area_second = second_figure->getArea();
-            bool result = first_figure->compare(area_first, area_second);
+            double area_first = figure_first->getArea();
+            double area_second = figure_second->getArea();
+            bool result = figure_first->compare(area_first, area_second);
             if (result) {
                 std::cout << "Площадь 1-ой фигуры больше 2-ой\n";
             } else {
@@ -123,7 +123,7 @@ void Console::run() {
         }
         case 6:
         {
-            bool result = first_figure->IsIntersect(*first_figure, *second_figure);
+            bool result = figure_first->IsIntersect(*figure_first, *figure_second);
             if (result) {
                 std::cout << "Фигуры пересекаются\n";
             } else {
@@ -135,8 +135,8 @@ void Console::run() {
         }
     } while (operation);
 
-    delete first_figure;
-    delete second_figure;
+    delete figure_first;
+    delete figure_second;
 }
 
 void Console::printMenu() {

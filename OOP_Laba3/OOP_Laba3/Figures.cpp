@@ -29,11 +29,9 @@ Shape* Shape::createShape(char T) {
 
 Point Shape::getCenterOfGravity() const {
 	Point point;
-	point.x = 0.0;
-	point.y = 0.0;
 	for (int i = 0; i < _numberOfEdges; ++i) {
-		point.x = point.x + _point[i].x;
-		point.y = point.y + _point[i].y;
+		point.x += _point[i].x;
+		point.y += _point[i].y;
 	}
 	point.x = point.x / _numberOfEdges;
 	point.y = point.y / _numberOfEdges;
@@ -41,25 +39,20 @@ Point Shape::getCenterOfGravity() const {
 }
 
 void Shape::rotate(int degrees) {
-	Radian radian;
-	Point center;
-	Rounding rounding;
-
-	double angle = radian.degreesToRadian(degrees);
-	center = getCenterOfGravity();
-
+	Point center = getCenterOfGravity();
+	double angle = Radian::degreesToRadian(degrees);
 	for (int i = 0; i < _numberOfEdges; ++i) {
 		_point[i].x -= center.x;
 		_point[i].y -= center.y;
 
-		double tempX = _point[i].x * cos(angle) - _point[i].y * sin(angle);
-		double tempY = _point[i].y * cos(angle) + _point[i].x * sin(angle);
+		double temp_x = _point[i].x * cos(angle) - _point[i].y * sin(angle);
+		double temp_y = _point[i].y * cos(angle) + _point[i].x * sin(angle);
 
-		_point[i].x = tempX + center.x;
-		_point[i].y = tempY + center.y;
+		_point[i].x = temp_x + center.x;
+		_point[i].y = temp_y + center.y;
 
-		_point[i].x = rounding.roundingNumber(_point[i].x);
-		_point[i].y = rounding.roundingNumber(_point[i].y);
+		_point[i].x = Rounding::roundingNumber(_point[i].x);
+		_point[i].y = Rounding::roundingNumber(_point[i].y);
 	}
 }
 
@@ -75,12 +68,11 @@ bool Shape::compare(double area_first, double area_second) {
 }
 
 bool Shape::IsIntersect(const Shape& first, const Shape& second) {
-	IntersectLines intersectLines;
 	int count_first = first._numberOfEdges;
 	int count_second = second._numberOfEdges;
 	for (int i = 0; i < count_first; ++i) {
 		for (int j = 0; j < count_second; ++j) {
-			if (intersectLines.checkLines(first[i], first[(i + 1) % count_first],
+			if (IntersectLines::checkLines(first[i], first[(i + 1) % count_first],
 				second[j], second[(j + 1) % count_second])) {
 				return true;
 			}

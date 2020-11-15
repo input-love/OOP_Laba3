@@ -43,7 +43,7 @@ void Console::run() {
     }
     // ---------------------------------------------------
 
-    int operation, numberOfFigure;
+    int operation;
 
     do {
         printMenu();
@@ -53,9 +53,11 @@ void Console::run() {
         switch (operation) {
         case 1:
         {
+            int numberOfFigure;
             std::cout << "У какой фигуры вычислить площадь? (1) или (2)\n";
             std::cin >> numberOfFigure;
 
+            std::cout << "Площадь фигуры:= ";
             if (numberOfFigure == 1) {
                 std::cout << figure_first->getArea() << std::endl;
             } else if (numberOfFigure == 2) {
@@ -65,6 +67,7 @@ void Console::run() {
         }
         case 2:
         {
+            int numberOfFigure;
             std::cout << "У какой фигуры вычислить центр тяжести? (1) или (2)\n";
             std::cin >> numberOfFigure;
 
@@ -79,6 +82,7 @@ void Console::run() {
         }
         case 3:
         {
+            int numberOfFigure;
             std::cout << "Какую фигуру перевернуть? (1) или (2)\n";
             std::cin >> numberOfFigure;
 
@@ -95,6 +99,7 @@ void Console::run() {
         }
         case 4:
         {
+            int numberOfFigure;
             std::cout << "Какую фигуру передвинуть? (1) или (2)\n";
             std::cin >> numberOfFigure;
 
@@ -123,11 +128,25 @@ void Console::run() {
         }
         case 6:
         {
-            bool result = figure_first->IsIntersect(*figure_first, *figure_second);
+            Operations operations;
+            bool result = operations.isIntersect(*figure_first, *figure_second);
             if (result) {
                 std::cout << "Фигуры пересекаются\n";
             } else {
                 std::cout << "Фигуры не пересекаются\n";
+            }
+            break;
+        }
+        case 7:
+        {
+            Operations operations;
+            int result = operations.isInsertion(*figure_first, *figure_second);
+            if (result == 1) {
+                std::cout << "Фигура 1 включает фигуру 2\n";
+            } else if (result == 2) {
+                std::cout << "Фигура 2 включает фигуру 1\n";
+            } else {
+                std::cout << "Фигуры не включены\n";
             }
         }
         default:

@@ -67,22 +67,7 @@ bool Shape::compare(double area_first, double area_second) {
 	return area_first > area_second;
 }
 
-bool Shape::IsIntersect(const Shape& first, const Shape& second) {
-	int count_first = first._numberOfEdges;
-	int count_second = second._numberOfEdges;
-	for (int i = 0; i < count_first; ++i) {
-		for (int j = 0; j < count_second; ++j) {
-			if (IntersectLines::checkLines(first[i], first[(i + 1) % count_first],
-				second[j], second[(j + 1) % count_second])) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-
-int Shape::getNumberOfEdges() {
+int Shape::getNumberOfEdges() const {
 	return _numberOfEdges;
 }
 

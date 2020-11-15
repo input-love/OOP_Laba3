@@ -140,10 +140,10 @@ void Console::run() {
         case 7:
         {
             Operations operations;
-            int result = operations.isInsertion(*figure_first, *figure_second);
-            if (result == 1) {
+            std::string result = operations.isInsertion(*figure_first, *figure_second);
+            if (result == "More") {
                 std::cout << "Фигура 1 включает фигуру 2\n";
-            } else if (result == 2) {
+            } else if (result == "Less") {
                 std::cout << "Фигура 2 включает фигуру 1\n";
             } else {
                 std::cout << "Фигуры не включены\n";

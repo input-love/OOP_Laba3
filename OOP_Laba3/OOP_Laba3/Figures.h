@@ -21,5 +21,5 @@ public:
 	virtual Point& operator [] (int i) const;
 protected:
 	const int _numberOfEdges;
-	Point* _point = nullptr;
+	Point* _point;
 };

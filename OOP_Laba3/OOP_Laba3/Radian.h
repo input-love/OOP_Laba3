@@ -2,6 +2,6 @@
 
 class Radian {
 public:
-	Radian();
+	Radian() = default;
 	static double degreesToRadian(int degrees);
 };

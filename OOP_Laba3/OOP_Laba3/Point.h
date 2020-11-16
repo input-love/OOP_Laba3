@@ -1,6 +1,8 @@
 #pragma once
 
 struct Point {
-	double x = 0;
-	double y = 0;
+	Point();
+	Point(int _x, int _y);
+	double x;
+	double y;
 };

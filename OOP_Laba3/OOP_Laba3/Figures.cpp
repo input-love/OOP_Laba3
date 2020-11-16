@@ -8,7 +8,7 @@ Shape::~Shape() {
 	delete[] _point;
 }
 
-Shape* Shape::createShape(char T) { 
+Shape* Shape::createShape(char T) {
 	Shape* shape = nullptr; 
 	switch (T) { 
 	case 'T':
@@ -27,7 +27,7 @@ Shape* Shape::createShape(char T) {
 	return shape; 
 }
 
-Point Shape::getCenterOfGravity() const {
+Point& Shape::getCenterOfGravity() const {
 	Point point;
 	for (int i = 0; i < _numberOfEdges; ++i) {
 		point.x += _point[i].x;
@@ -63,7 +63,7 @@ void Shape::move(const Point& point) {
 	}
 }
 
-bool Shape::compare(double area_first, double area_second) {
+bool Shape::compare(double area_first, double area_second) const {
 	return area_first > area_second;
 }
 

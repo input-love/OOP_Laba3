@@ -1,9 +1,10 @@
 #include "Operations.h"
 
 bool Operations::isIntersect(const Shape& first, const Shape& second) const {
-    bool result = false;
     int count_first = first.getNumberOfEdges();
     int count_second = second.getNumberOfEdges();
+
+    bool result = false;
     for (int i = 0; i < count_first; ++i) {
         for (int j = 0; j < count_second; ++j) {
             result = intersectLines(first[i], first[(i + 1) % count_first],
@@ -13,14 +14,30 @@ bool Operations::isIntersect(const Shape& first, const Shape& second) const {
     return result;
 }
 
-std::string Operations::isInsertion(const Shape& first, const Shape& second) const {
-    std::string figure_first = getMostLeftCoord(first, second);
-    std::string figure_second = getMostRightCoord(first, second);
-    if (!isIntersect(first, second) && (figure_first == figure_second)) {
-        return (figure_first == "First figure") ? "More" : "Less";
-    } else {
-        return "Equally";
+bool Operations::isInsertion(const Shape& first, const Shape& second) const {
+    int count_first = first.getNumberOfEdges();
+    int count_second = second.getNumberOfEdges();
+    
+    Line* lines = new Line[second.getNumberOfEdges()];
+    for (int i = 0; i < count_first; ++i) {
+
+        for (int j = 0; j < count_second; ++j) {
+            lines[j] = Line(first[i], second[j]);
+        }
+
+        double angle = 0;
+        for (int j = 0; j < count_second - 1; ++j) {
+            angle += findAngle(lines[j], lines[j + 1]);
+        }
+        angle += findAngle(lines[count_second - 1], lines[0]);
+
+        if (std::abs(angle - 2 * PI) >= 1e-9) {
+            delete[] lines;
+            return false;
+        }
     }
+    delete[] lines;
+    return true;
 }
 
 bool Operations::intersectLines(const Point& first, const Point& second, const Point& third, const Point& fourth) const {
@@ -39,46 +56,20 @@ bool Operations::intersectLines(const Point& first, const Point& second, const P
     }
 }
 
-std::string Operations::getMostLeftCoord(const Shape& first, const Shape& second) const {
-    std::string figure;
-    Point MostLeft = first[0];
-
-    int count = first.getNumberOfEdges();
-    for (int i = 1; i < count; ++i) {
-        if (first[i].x < MostLeft.x) {
-            MostLeft = first[i];
-            figure = "First figure";
-        }
-    }
-
-    count = second.getNumberOfEdges();
-    for (int i = 0; i < count; ++i) {
-        if (second[i].x < MostLeft.x) {
-            MostLeft = second[i];
-            figure = "Second figure";
-        }
-    }
-    return figure;
+double Operations::findMagnitude(const Line& line) const {
+    double x = std::abs(line.end.x - line.begin.x);
+    double y = std::abs(line.end.y - line.begin.y);
+    return sqrt(x * x + y * y);
 }
 
-std::string Operations::getMostRightCoord(const Shape& first, const Shape& second) const {
-    std::string figure;
-    Point MostRight = first[0];
+double Operations::findAngle(const Line& first, const Line& second) const {
+    Point vector_first(first.end.x - first.begin.x, first.end.y - first.begin.y);
+    Point vector_second(second.end.x - second.begin.x, second.end.y - second.begin.y);
 
-    int count = first.getNumberOfEdges();
-    for (int i = 1; i < count; ++i) {
-        if (first[i].x < MostRight.x) {
-            MostRight = first[i];
-            figure = "First figure";
-        }
-    }
+    double scalar = vector_first.x * vector_second.x + vector_first.y * vector_second.y;
 
-    count = second.getNumberOfEdges();
-    for (int i = 0; i < count; ++i) {
-        if (second[i].x < MostRight.x) {
-            MostRight = second[i];
-            figure = "Second figure";
-        }
-    }
-    return figure;
+    double magnitude1 = findMagnitude(first);
+    double magnitude2 = findMagnitude(second);
+
+    return acos(scalar / (magnitude1 * magnitude2));
 }

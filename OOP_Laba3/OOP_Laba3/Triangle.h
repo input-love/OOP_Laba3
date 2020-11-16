@@ -1,5 +1,6 @@
 #pragma once
 #include "Figures.h"
+#include "Vector.h"
 
 class Triangle: public Shape {
 public:

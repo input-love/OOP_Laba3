@@ -3,6 +3,6 @@
 
 class Rounding {
 public:
-	Rounding();
+	Rounding() = default;
 	static double roundingNumber(double number);
 };

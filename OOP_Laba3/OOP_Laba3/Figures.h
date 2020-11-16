@@ -1,10 +1,8 @@
 #pragma once
-#include <iostream>
 #include "Point.h"
 #include "Vector.h"
 #include "Radian.h"
 #include "Rounding.h"
-#include "Operations.h"
 #include "Error.h"
 
 class Shape { 

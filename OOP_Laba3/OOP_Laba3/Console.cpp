@@ -148,6 +148,7 @@ void Console::run() {
             } else {
                 std::cout << "Фигуры не включены\n";
             }
+            break;
         }
         default:
             operation = 0;

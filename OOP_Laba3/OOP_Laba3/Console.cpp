@@ -160,9 +160,9 @@ void Console::start() {
             }
 
             if (result && !operations.isIntersect(*figure_first, *figure_second)) {
-                std::cout << "1-ая фигура включает в себя 2-ую\n";
+                std::cout << "Да, включает!\n";
             } else {
-                std::cout << "1-ая фигура не включает в себя 2-ую\n";
+                std::cout << "Нет, не включает!\n";
             }
             break;
         }

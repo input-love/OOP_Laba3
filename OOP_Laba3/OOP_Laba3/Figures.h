@@ -1,6 +1,6 @@
 #pragma once
 #include "Point.h"
-#include "Radian.h"
+#include "Angle.h"
 #include "Rounding.h"
 #include "Error.h"
 

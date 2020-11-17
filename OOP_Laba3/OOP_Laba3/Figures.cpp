@@ -40,7 +40,7 @@ Point& Shape::getCenterOfGravity() const {
 
 void Shape::rotate(int degrees) {
 	Point center = getCenterOfGravity();
-	double angle = Radian::degreesToRadian(degrees);
+	double angle = Angle::Radian(degrees);
 	for (int i = 0; i < _numberOfEdges; ++i) {
 		_point[i].x -= center.x;
 		_point[i].y -= center.y;

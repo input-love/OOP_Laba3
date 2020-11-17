@@ -3,7 +3,10 @@
 Rectangle::Rectangle(): Shape(4) {}
 
 double Rectangle::getArea() {
-	double vector_first = Vector::getVectorLength(_point[0], _point[1]);
-	double vector_second = Vector::getVectorLength(_point[1], _point[2]);
-	return vector_first * vector_second;
+	double result = 1;
+	for (int i = 0; i < 2; ++i) {
+		Line line(_point[i], _point[i + 1]);
+		result *= Vector::findMagnitude(line);
+	}
+	return result;
 }

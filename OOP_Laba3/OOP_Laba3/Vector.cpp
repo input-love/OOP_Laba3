@@ -1,15 +1,14 @@
 #include "Vector.h"
 
-bool Vector::intersectOfVectors(const Point& first, const Point& second, const Point& third, const Point& fourth) {
-    double denominator = (fourth.y - third.y) * (first.x - second.x) - (fourth.x - third.x) * (first.y - second.y);
-    if (denominator == 0) {
-        return ((first.x * second.y - second.x * first.y) * (fourth.x - third.x) - (third.x * fourth.y - fourth.x * third.y)
-            * (second.x - first.x) == 0 && (first.x * second.y - second.x * first.y) * (fourth.y - third.y)
-            - (third.x * fourth.y - fourth.x * third.y) * (second.y - first.y) == 0) ? true : false;
-    }
-    else {
-        double numerator_first = (fourth.x - second.x) * (fourth.y - third.y) - (fourth.x - third.x) * (fourth.y - second.y);
-        double numerator_second = (first.x - second.x) * (fourth.y - second.y) - (fourth.x - second.x) * (first.y - second.y);
+bool Vector::intersectOfVectors(const Line& line_first, const Line& line_second) {
+    double denominator = (line_second.end.y - line_second.begin.y) * (line_first.begin.x - line_first.end.x) - (line_second.end.x - line_second.begin.x) * (line_first.begin.y - line_first.end.y);
+    if (!denominator) {
+        return ((line_first.begin.x * line_first.end.y - line_first.end.x * line_first.begin.y) * (line_second.end.x - line_second.begin.x) - (line_second.begin.x * line_second.end.y - line_second.end.x * line_second.begin.y)
+            * (line_first.end.x - line_first.begin.x) == 0 && (line_first.begin.x * line_first.end.y - line_first.end.x * line_first.begin.y) * (line_second.end.y - line_second.begin.y)
+            - (line_second.begin.x * line_second.end.y - line_second.end.x * line_second.begin.y) * (line_first.end.y - line_first.begin.y) == 0) ? true : false;
+    } else {
+        double numerator_first = (line_second.end.x - line_first.end.x) * (line_second.end.y - line_second.begin.y) - (line_second.end.x - line_second.begin.x) * (line_second.end.y - line_first.end.y);
+        double numerator_second = (line_first.begin.x - line_first.end.x) * (line_second.end.y - line_first.end.y) - (line_second.end.x - line_first.end.x) * (line_first.begin.y - line_first.end.y);
         double temp_first = numerator_first / denominator;
         double temp_second = numerator_second / denominator;
         return (temp_first >= 0 && temp_first <= 1 && temp_second >= 0 && temp_second <= 1) ? true : false;

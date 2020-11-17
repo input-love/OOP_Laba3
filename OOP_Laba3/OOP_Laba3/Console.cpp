@@ -124,19 +124,19 @@ void Console::start() {
             double area_first = figure_first->getArea();
             double area_second = figure_second->getArea();
 
-            bool result = figure_first->compare(area_first, area_second);
-            if (result) {
+            std::string result = figure_first->compare(area_first, area_second);
+            if (result == "More") {
                 std::cout << "Площадь 1-ой фигуры больше 2-ой\n";
-            } else {
+            } else if (result == "Less") {
                 std::cout << "Площадь 2-ой фигуры больше 1-ой\n";
+            } else if (result == "Same") {
+                std::cout << "Площадь 1-ой фигуры равна площади 2-ой фигуры\n";
             }
             break;
         }
         case 6:
         {
-            Operations operations;
-
-            bool result = operations.isIntersect(*figure_first, *figure_second);
+            bool result = Operations::isIntersect(*figure_first, *figure_second);
             if (result) {
                 std::cout << "Фигуры пересекаются\n";
             } else {
@@ -146,20 +146,18 @@ void Console::start() {
         }
         case 7:
         {
-            Operations operations;
-
             int id_figure_first, id_figure_second;
             std::cout << "У каких фигур проверить включение? | (ID первой фигуры, ID второй фигуры)\n";
             std::cin >> id_figure_first >> id_figure_second;
 
             bool result = false;
             if(id_figure_first == 1 && id_figure_second == 2) {
-                result = operations.isInsertion(*figure_second, *figure_first);
+                result = Operations::isInsertion(*figure_second, *figure_first);
             } else if(id_figure_first == 2 && id_figure_second == 1) {
-                result = operations.isInsertion(*figure_first, *figure_second);
+                result = Operations::isInsertion(*figure_first, *figure_second);
             }
 
-            if (result && !operations.isIntersect(*figure_first, *figure_second)) {
+            if (result && !Operations::isIntersect(*figure_first, *figure_second)) {
                 std::cout << "Да, включает!\n";
             } else {
                 std::cout << "Нет, не включает!\n";

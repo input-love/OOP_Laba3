@@ -13,7 +13,7 @@ public:
 	Point& getCenterOfGravity() const;
 	void rotate(int degrees); 
 	void move(const Point& point);
-	bool compare(double area_first, double area_second) const; // Fix
+	std::string compare(double area_first, double area_second) const;
 	int getNumberOfEdges() const;
 	virtual Point& operator [] (int i) const;
 protected:

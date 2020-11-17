@@ -7,6 +7,6 @@
 class Operations {
 public:
 	Operations() = default;
-	bool isIntersect(const Shape& first, const Shape& second) const;
-	bool isInsertion(const Shape& first, const Shape& second) const;
+	static bool isIntersect(const Shape& first, const Shape& second);
+	static bool isInsertion(const Shape& first, const Shape& second);
 };

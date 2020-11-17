@@ -2,7 +2,7 @@
 
 struct Point {
 	Point();
-	Point(int _x, int _y);
+	Point(double x, double y);
 	double x;
 	double y;
 };

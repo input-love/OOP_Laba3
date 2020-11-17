@@ -6,6 +6,6 @@
 class Vector {
 public:
 	Vector() = default;
-	static bool intersectOfVectors(const Point& first, const Point& second, const Point& third, const Point& fourth);
+	static bool intersectOfVectors(const Line& line_first, const Line& line_second);
 	static double findMagnitude(const Line& line);
 };

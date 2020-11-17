@@ -1,24 +1,25 @@
 #include "Operations.h"
 
-bool Operations::isIntersect(const Shape& first, const Shape& second) const {
+bool Operations::isIntersect(const Shape& first, const Shape& second) {
     int count_first = first.getNumberOfEdges();
     int count_second = second.getNumberOfEdges();
 
     bool result = false;
     for (int i = 0; i < count_first; ++i) {
         for (int j = 0; j < count_second; ++j) {
-            result = Vector::intersectOfVectors(first[i], first[(i + 1) % count_first],
-                second[j], second[(j + 1) % count_second]);
+            Line line_first(first[i], first[(i + 1) % count_first]);
+            Line line_second(second[j], second[(j + 1) % count_second]);
+            result = Vector::intersectOfVectors(line_first, line_second);
         }
     }
     return result;
 }
 
-bool Operations::isInsertion(const Shape& first, const Shape& second) const {
+bool Operations::isInsertion(const Shape& first, const Shape& second) {
     int count_first = first.getNumberOfEdges();
     int count_second = second.getNumberOfEdges();
     
-    Line* lines = new Line[second.getNumberOfEdges()];
+    Line* lines = new Line[count_second];
     for (int i = 0; i < count_first; ++i) {
 
         for (int j = 0; j < count_second; ++j) {

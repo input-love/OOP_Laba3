@@ -2,4 +2,4 @@
 
 Line::Line(): begin(), end() {}
 
-Line::Line(Point _begin, Point _end): begin(_begin), end(_end) {}
+Line::Line(Point begin, Point end): begin(begin), end(end) {}

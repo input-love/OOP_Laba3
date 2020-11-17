@@ -3,7 +3,7 @@
 
 struct Line {
 	Line();
-	Line(Point _begin, Point _end);
+	Line(Point begin, Point end);
 	Point begin;
 	Point end;
 };

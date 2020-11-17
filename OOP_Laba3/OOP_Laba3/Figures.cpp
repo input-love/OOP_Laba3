@@ -63,8 +63,16 @@ void Shape::move(const Point& point) {
 	}
 }
 
-bool Shape::compare(double area_first, double area_second) const {
-	return area_first > area_second;
+std::string Shape::compare(double area_first, double area_second) const {
+	std::string result;
+	if (area_first > area_second) {
+		result = "More";
+	} else if (area_first < area_second) {
+		result = "Less";
+	} else {
+		result = "Same";
+	}
+	return result;
 }
 
 int Shape::getNumberOfEdges() const {

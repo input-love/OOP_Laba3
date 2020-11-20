@@ -3,6 +3,7 @@
 #include <string>
 #include "Point.h"
 #include "Angle.h"
+#include "Vector.h"
 
 class Shape { 
 public:

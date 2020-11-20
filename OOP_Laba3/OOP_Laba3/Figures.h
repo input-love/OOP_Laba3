@@ -1,8 +1,8 @@
 #pragma once
+#include <execution>
+#include <string>
 #include "Point.h"
 #include "Angle.h"
-#include "Rounding.h"
-#include "Error.h"
 
 class Shape { 
 public:

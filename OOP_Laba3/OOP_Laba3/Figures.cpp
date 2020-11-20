@@ -22,7 +22,7 @@ Shape* Shape::createShape(char T) {
 		}
 		break;
 	default:
-		throw Error("Некорректный ввод данных");
+		throw std::exception("Некорректный ввод данных");
 	}
 	return shape; 
 }
@@ -40,7 +40,7 @@ Point& Shape::getCenterOfGravity() const {
 
 void Shape::rotate(int degrees) {
 	Point center = getCenterOfGravity();
-	double angle = Angle::Radian(degrees);
+	double angle = Angle::radian(degrees);
 	for (int i = 0; i < _numberOfEdges; ++i) {
 		_point[i].x -= center.x;
 		_point[i].y -= center.y;
@@ -50,9 +50,6 @@ void Shape::rotate(int degrees) {
 
 		_point[i].x = temp_x + center.x;
 		_point[i].y = temp_y + center.y;
-
-		_point[i].x = Rounding::roundingNumber(_point[i].x);
-		_point[i].y = Rounding::roundingNumber(_point[i].y);
 	}
 }
 

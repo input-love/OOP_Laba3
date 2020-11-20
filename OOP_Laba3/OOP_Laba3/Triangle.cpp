@@ -11,7 +11,7 @@ double Triangle::getArea() {
 	double b = Vector::findMagnitude(line_second);
 	double c = Vector::findMagnitude(line_third);
 
-	double p = (a + b + c) / 2;
+	double p = (a + b + c) / 2.0;
 
 	return sqrt(p * (p - a) * (p - b) * (p - c));
 }

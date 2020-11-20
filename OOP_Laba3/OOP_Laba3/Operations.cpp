@@ -46,6 +46,7 @@ bool Operations::isInsertion(const Shape& first, const Shape& second) {
             delete[] lines;
             return false;
         }
+
     }
     delete[] lines;
     return true;

@@ -165,7 +165,7 @@ void Console::start() {
             break;
         }
         default:
-            throw Error("Некорректный ввод данных");
+            throw std::exception("Некорректный ввод данных");
         }
     } while (operation);
 

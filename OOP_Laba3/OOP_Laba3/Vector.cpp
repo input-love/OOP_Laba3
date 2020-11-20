@@ -27,8 +27,8 @@ double Vector::pointCheck(double a, double b, double c, double d) {
 }
 
 bool Vector::intersectVector(double a, double b, double c, double d) {
-	if (a > b)  std::swap(a, b);
-	if (c > d)  std::swap(c, d);
+	if (a > b) { std::swap(a, b); }
+	if (c > d) { std::swap(c, d); }
 	return std::max(a, c) <= std::min(b, d);
 }
 

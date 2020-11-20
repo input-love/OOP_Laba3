@@ -1,7 +1,7 @@
 #include "Angle.h"
 
-double Angle::Radian(int degrees) {
-	double result = (degrees * 2.0 * asin(1)) / 180;
+double Angle::radian(int degrees) {
+	double result = (degrees * 2.0 * std::asin(1)) / 180;
 	return result;
 }
 
@@ -11,8 +11,8 @@ double Angle::findAngle(const Line& first, const Line& second) {
 
     double scalar = vector_first.x * vector_second.x + vector_first.y * vector_second.y;
 
-    double magnitude1 = Vector::findMagnitude(first);
-    double magnitude2 = Vector::findMagnitude(second);
+    double magnitude_first = Vector::findMagnitude(first);
+    double magnitude_second = Vector::findMagnitude(second);
 
-    return acos(scalar / (magnitude1 * magnitude2));
+    return std::acos(scalar / (magnitude_first * magnitude_second));
 }

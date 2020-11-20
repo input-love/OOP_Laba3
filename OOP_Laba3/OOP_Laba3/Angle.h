@@ -5,7 +5,6 @@
 
 class Angle {
 public:
-	Angle() = default;
 	static double Radian(int degrees);
 	static double findAngle(const Line& first, const Line& second);
 };

@@ -6,7 +6,6 @@
 
 class Console {
 public:
-	Console() = default;
 	void start();
 private:
 	void printMenu();

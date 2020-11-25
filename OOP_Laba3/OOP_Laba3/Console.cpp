@@ -7,39 +7,56 @@ void Console::start() {
     Shape* figure_second = nullptr;
 
     // ---------------------------------------------------
-    char T;
-    std::cout << "Какую фигуру хотите создать? | (T) - треугольник, (R) - прямоугольник\n";
-    std::cin >> T;
-
     try {
+        char T;
+        std::cout << "Какую фигуру хотите создать? | (T) - треугольник, (R) - прямоугольник\n";
+        std::cin >> T;
+
         figure_first = Shape::createShape(T);
+
+        int count = figure_first->getNumberOfEdges();
+
+        std::cout << "Введите координаты фигуры: | (x, y): " << std::endl;
+        for (int i = 0; i < count; ++i) {
+            std::cin >> figure_first->operator[](i).x >> figure_first->operator[](i).y;
+        }
+
+        if (CheckFigure::check(T, *figure_first)) {
+            std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
+        }
     } catch (const std::exception& exept) {
         std::cout << exept.what() << std::endl;
+
+        delete figure_first;
+        delete figure_second;
+
         return;
-    }
-
-    int count = figure_first->getNumberOfEdges();
-
-    std::cout << "Введите координаты фигуры: | (x, y): " << std::endl;
-    for (int i = 0; i < count; ++i) {
-        std::cin >> figure_first->operator[](i).x >> figure_first->operator[](i).y;
     }
     // ---------------------------------------------------
-    std::cout << "Какую фигуру хотите создать? | (T) - треугольник, (R) - прямоугольник\n";
-    std::cin >> T;
-
     try {
+        char T;
+        std::cout << "Какую фигуру хотите создать? | (T) - треугольник, (R) - прямоугольник\n";
+        std::cin >> T;
+
         figure_second = Shape::createShape(T);
+
+        int count = figure_second->getNumberOfEdges();
+
+        std::cout << "Введите координаты фигуры: | (x, y): " << std::endl;
+        for (int i = 0; i < count; ++i) {
+            std::cin >> figure_second->operator[](i).x >> figure_second->operator[](i).y;
+        }
+
+        if (CheckFigure::check(T, *figure_first)) {
+            std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
+        }
     } catch (const std::exception& exept) {
         std::cout << exept.what() << std::endl;
+
+        delete figure_first;
+        delete figure_second;
+
         return;
-    }
-
-    count = figure_second->getNumberOfEdges();
-
-    std::cout << "Введите координаты фигуры: | (x, y): " << std::endl;
-    for (int i = 0; i < count; ++i) {
-        std::cin >> figure_second->operator[](i).x >> figure_second->operator[](i).y;
     }
     // ---------------------------------------------------
 
@@ -51,11 +68,6 @@ void Console::start() {
         std::cin >> operation;
 
         switch (operation) {
-        case 0:
-        {
-            operation = 0;
-            break;
-        }
         case 1:
         {
             int numberOfFigure;
@@ -165,7 +177,8 @@ void Console::start() {
             break;
         }
         default:
-            throw std::exception("Некорректный ввод данных");
+            operation = 0;
+            break;
         }
     } while (operation);
 
@@ -174,12 +187,14 @@ void Console::start() {
 }
 
 void Console::printMenu() {
-    std::cout << "1 - Площадь\n";
-    std::cout << "2 - Центр тяжести\n";
-    std::cout << "3 - Повернуть\n";
-    std::cout << "4 - Переместить\n";
-    std::cout << "5 - Сравнить\n";
-    std::cout << "6 - Пересечение\n";
-    std::cout << "7 - Включение\n";
+    std::cout << "\n-----------------------------\n";
+    std::cout << "1 - Найти площадь\n";
+    std::cout << "2 - Найти центр тяжести\n";
+    std::cout << "3 - Повернуть фигуру\n";
+    std::cout << "4 - Переместить фигуру\n";
+    std::cout << "5 - Сравнить две фигуры (по площади)\n";
+    std::cout << "6 - Пересечение фигур\n";
+    std::cout << "7 - Включение одной фигуры в другую\n";
     std::cout << "0 - Выход\n";
+    std::cout << "-----------------------------\n";
 }

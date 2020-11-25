@@ -3,6 +3,7 @@
 #include <clocale>
 #include "Figures.h"
 #include "Operations.h"
+#include "CheckFigure.h"
 
 class Console {
 public:

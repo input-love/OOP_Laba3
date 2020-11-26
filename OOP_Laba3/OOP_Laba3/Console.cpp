@@ -49,7 +49,7 @@ void Console::start() {
             std::cin >> figure_second->operator[](i).x >> figure_second->operator[](i).y;
         }
 
-        if (CheckFigure::check(T, *figure_first)) {
+        if (CheckFigure::check(T, *figure_second)) {
             std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
         } else {
             throw std::exception("Ошибка ввода координат... Завершение программы!");

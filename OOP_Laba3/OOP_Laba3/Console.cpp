@@ -23,6 +23,8 @@ void Console::start() {
 
         if (CheckFigure::check(T, *figure_first)) {
             std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
+        } else {
+            throw std::exception("Ошибка ввода координат... Завершение программы!");
         }
     } catch (const std::exception& exept) {
         std::cout << exept.what() << std::endl;
@@ -49,6 +51,8 @@ void Console::start() {
 
         if (CheckFigure::check(T, *figure_first)) {
             std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
+        } else {
+            throw std::exception("Ошибка ввода координат... Завершение программы!");
         }
     } catch (const std::exception& exept) {
         std::cout << exept.what() << std::endl;

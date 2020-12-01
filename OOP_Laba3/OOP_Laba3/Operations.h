@@ -3,7 +3,7 @@
 #include "Line.h"
 #include "Vector.h"
 #include "Angle.h"
-#define PI 3.1415926535
+const double PI = std::acos(-1);
 
 class Operations {
 public:

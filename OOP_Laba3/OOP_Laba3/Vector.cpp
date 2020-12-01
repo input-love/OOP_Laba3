@@ -33,5 +33,5 @@ bool Vector::intersectVector(double a, double b, double c, double d) {
 }
 
 bool Vector::compare(double a, double b, double c) {
-	return std::min(a, b) <= c + 1E-9 && c <= std::max(a, b) + 1E-9;
+	return std::min(a, b) <= c + Accuracy && c <= std::max(a, b) + Accuracy;
 }

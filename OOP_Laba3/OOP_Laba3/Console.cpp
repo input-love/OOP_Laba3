@@ -25,6 +25,10 @@ void Console::start() {
 void Console::dialogFigureCount() {
     std::cout << "Сколько будет фигур?: ";
     std::cin >> _count;
+
+    if (_count <= 0) {
+        throw std::exception("Ошибка ввода количества фигур... Завершение работы!");
+    }
 }
 
 void Console::createEmptyArr() {
@@ -67,59 +71,62 @@ void Console::dialog() {
     int operation;
 
     do {
-        int ID_first = figureID(1);
-
         printMenu();
+
         std::cin >> operation;
 
         switch (operation) {
         case 1:
-            area(*_figure[ID_first]);
+        {
+            area(*_figure[figureID()]);
             break;
+        }
         case 2:
-            centerOfGravity(*_figure[ID_first]);
+        {
+            centerOfGravity(*_figure[figureID()]);
             break;
+        }
         case 3:
-            rotate(*_figure[ID_first]);
+        {
+            rotate(*_figure[figureID()]);
             break;
+        }
         case 4:
-            move(*_figure[ID_first]);
+        {
+            move(*_figure[figureID()]);
             break;
+        }
         case 5:
         {
-            int ID_second = figureID(2);
-            compare(*_figure[ID_first], *_figure[ID_second]);
+            compare(*_figure[figureID()], *_figure[figureID()]);
             break;
         }
         case 6:
         {
-            int ID_second = figureID(2);
-            intersect(*_figure[ID_first], *_figure[ID_second]);
+            intersect(*_figure[figureID()], *_figure[figureID()]);
             break;
         }
         case 7:
         {
-            int ID_second = figureID(2);
-            insertion(*_figure[ID_first], *_figure[ID_second]);
+            insertion(*_figure[figureID()], *_figure[figureID()]);
             break;
         }
         default:
             operation = 0;
-            break;
         }
     } while (operation);
 }
 
-int Console::figureID(int i) const {
-    int ID;
-    std::cout << "\nВведите ID фигуры №" << i << "(какую использовать)?: " << std::endl;
-    std::cin >> ID;
+int Console::figureID() const {
+    int figure_id;
+    std::cout << "Введите ID фигуры: " << std::endl;
+    std::cin >> figure_id;
 
-    if (ID < 1 || ID > _count) {
+    if (figure_id < 1 || figure_id > _count) {
         throw std::exception("Ошибка ввода ID фигуры... Завершение работы!");
     }
 
-    return ID - 1;
+    return figure_id - 1;
 }
 
 void Console::area(Shape& figure) const {
@@ -149,10 +156,9 @@ void Console::move(Shape& figure) const {
 
 void Console::compare(Shape& figure_first, Shape& figure_second) const {
     double result = figure_first.getArea() - figure_second.getArea();
-
-    if (result > 0) {
+    if (result < 0) {
         std::cout << "Площадь 1-ой фигуры больше 2-ой" << std::endl;
-    } else if (result < 0) {
+    } else if (result > 0) {
         std::cout << "Площадь 2-ой фигуры больше 1-ой" << std::endl;
     } else {
         std::cout << "Площадь 1-ой фигуры равна площади 2-ой фигуры" << std::endl;
@@ -170,8 +176,7 @@ void Console::intersect(Shape& figure_first, Shape& figure_second) const {
 
 void Console::insertion(Shape& figure_first, Shape& figure_second) const {
     bool result = Operations::isInsertion(figure_second, figure_first);
-
-    if (result && !Operations::isIntersect(figure_first, figure_second)) {
+    if (result) {
         std::cout << "Да, включает!" << std::endl;
     } else {
         std::cout << "Нет, не включает!" << std::endl;

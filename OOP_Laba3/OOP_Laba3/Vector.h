@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "Line.h"
 #include "Point.h"
+const double Accuracy = 1e-9;
 
 class Vector {
 public:

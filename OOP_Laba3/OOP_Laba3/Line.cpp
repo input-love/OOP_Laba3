@@ -2,4 +2,4 @@
 
 Line::Line(): begin(), end() {}
 
-Line::Line(Point begin, Point end): begin(begin), end(end) {}
+Line::Line(const Point& begin, const Point& end): begin(begin), end(end) {}

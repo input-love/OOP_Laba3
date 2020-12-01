@@ -1,20 +1,16 @@
 #include "ShapeFactory.h"
 
 Shape* ShapeFactory::createShape(char T) {
-	Shape* shape = nullptr;
 	switch (T) {
 	case 'T':
 	{
-		shape = new Triangle();
-		break;
+		return new Triangle();
 	}
 	case 'R':
 	{
-		shape = new Rectangle();
-		break;
+		return new Rectangle();
 	}
 	default:
 		throw std::exception("Некорректный тип фигуры");
 	}
-	return shape;
 }

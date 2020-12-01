@@ -15,7 +15,7 @@ private:
 	void createEmptyArr();
 	void createFigure();
 	void dialog();
-	int figureID(int i) const;
+	int figureID() const;
 	void area(Shape& figure) const;
 	void centerOfGravity(const Shape& figure) const;
 	void rotate(Shape& figure) const;

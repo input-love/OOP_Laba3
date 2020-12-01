@@ -42,12 +42,12 @@ bool Operations::isInsertion(const Shape& first, const Shape& second) {
         }
         angle += Angle::findAngle(lines[count_second - 1], lines[0]);
 
-        if (std::abs(angle - 2 * PI) >= 1e-9) {
+        if (std::abs(angle - 2 * PI) >= Accuracy) {
             delete[] lines;
             return false;
         }
 
     }
     delete[] lines;
-    return true;
+    return !Operations::isIntersect(first, second);
 }

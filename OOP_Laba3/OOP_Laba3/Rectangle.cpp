@@ -10,3 +10,13 @@ double Rectangle::getArea() {
 	}
 	return result;
 }
+
+bool Rectangle::checkFigure() {
+	Line line_first(_point[0], _point[1]);
+	Line line_second(_point[1], _point[2]);
+	Line line_third(_point[2], _point[3]);
+	Line line_fourth(_point[3], _point[0]);
+
+	return Vector::findMagnitude(line_first) == Vector::findMagnitude(line_third)
+		&& Vector::findMagnitude(line_second) == Vector::findMagnitude(line_fourth);
+}

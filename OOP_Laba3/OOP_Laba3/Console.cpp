@@ -23,12 +23,10 @@ void Console::start() {
 }
 
 void Console::dialogFigureCount() {
-    std::cout << "Сколько будет фигур?: ";
-    std::cin >> _count;
-
-    if (_count <= 0) {
-        throw std::exception("Ошибка ввода количества фигур... Завершение работы!");
-    }
+    do {
+        std::cout << "Сколько будет фигур?: ";
+        std::cin >> _count;
+    } while (_count <= 0);
 }
 
 void Console::createEmptyArr() {
@@ -56,7 +54,7 @@ void Console::createFigure() {
                 std::cin >> _figure[i]->operator[](j).x >> _figure[i]->operator[](j).y;
             }
 
-            if (CheckFigure::check(T, *_figure[i])) {
+            if (_figure[i]->checkFigure()) {
                 std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
             } else {
                 throw std::exception("Координаты не подходят описанию фигуры... Завершение программы!");
@@ -119,12 +117,10 @@ void Console::dialog() {
 
 int Console::figureID() const {
     int figure_id;
-    std::cout << "Введите ID фигуры: " << std::endl;
-    std::cin >> figure_id;
-
-    if (figure_id < 1 || figure_id > _count) {
-        throw std::exception("Ошибка ввода ID фигуры... Завершение работы!");
-    }
+    do {
+        std::cout << "Введите ID фигуры: " << std::endl;
+        std::cin >> figure_id;
+    } while (figure_id < 1 || figure_id > _count);
 
     return figure_id - 1;
 }

@@ -10,6 +10,7 @@ public:
 	Shape(int count);
 	virtual ~Shape();
 	virtual double getArea() = 0;
+	virtual bool checkFigure() = 0;
 	Point getCenterOfGravity() const;
 	void rotate(int degrees); 
 	void move(const Point& point);

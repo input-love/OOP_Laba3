@@ -4,7 +4,6 @@
 #include "Figures.h"
 #include "ShapeFactory.h"
 #include "Operations.h"
-#include "CheckFigure.h"
 
 class Console {
 public:

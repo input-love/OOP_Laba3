@@ -1,183 +1,106 @@
 #include "Console.h"
 
+Console::~Console() {
+    for (int i = 0; i < _count; ++i) {
+        if (_figure[i] != nullptr) {
+            delete _figure[i];
+        }
+    }
+    delete[] _figure;
+}
+
 void Console::start() {
     setlocale(LC_ALL, "Russian");
 
-    Shape* figure_first = nullptr;
-    Shape* figure_second = nullptr;
-
-    // ---------------------------------------------------
     try {
-        char T;
-        std::cout << "Какую фигуру хотите создать? | (T) - треугольник, (R) - прямоугольник\n";
-        std::cin >> T;
-
-        figure_first = Shape::createShape(T);
-
-        int count = figure_first->getNumberOfEdges();
-
-        std::cout << "Введите координаты фигуры: | (x, y): " << std::endl;
-        for (int i = 0; i < count; ++i) {
-            std::cin >> figure_first->operator[](i).x >> figure_first->operator[](i).y;
-        }
-
-        if (CheckFigure::check(T, *figure_first)) {
-            std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
-        } else {
-            throw std::exception("Ошибка ввода координат... Завершение программы!");
-        }
+        dialogFigureCount();
+        createEmptyArr();
+        createFigure();
+        dialog();
     } catch (const std::exception& exept) {
         std::cout << exept.what() << std::endl;
-
-        delete figure_first;
-        delete figure_second;
-
-        return;
     }
-    // ---------------------------------------------------
+}
+
+void Console::dialogFigureCount() {
+    std::cout << "Сколько будет фигур?: ";
+    std::cin >> _count;
+}
+
+void Console::createEmptyArr() {
+    _figure = new Shape*[_count];
+    for (int i = 0; i < _count; ++i) {
+        _figure[i] = nullptr;
+    }
+}
+
+void Console::createFigure() {
     try {
-        char T;
-        std::cout << "Какую фигуру хотите создать? | (T) - треугольник, (R) - прямоугольник\n";
-        std::cin >> T;
+        for (int i = 0; i < _count; ++i) {
+            std::cout << "\n---Фигура #" << i + 1 << "---" << std::endl;
 
-        figure_second = Shape::createShape(T);
+            char T;
+            std::cout << "Какую фигуру создать? | (T) - треугольник, (R) - прямоугольник" << std::endl;
+            std::cin >> T;
 
-        int count = figure_second->getNumberOfEdges();
+            _figure[i] = ShapeFactory().createShape(T);
 
-        std::cout << "Введите координаты фигуры: | (x, y): " << std::endl;
-        for (int i = 0; i < count; ++i) {
-            std::cin >> figure_second->operator[](i).x >> figure_second->operator[](i).y;
-        }
+            int count = _figure[i]->getNumberOfEdges();
 
-        if (CheckFigure::check(T, *figure_second)) {
-            std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
-        } else {
-            throw std::exception("Ошибка ввода координат... Завершение программы!");
+            std::cout << "Введите координаты фигуры: | (x, y): " << std::endl;
+            for (int j = 0; j < count; ++j) {
+                std::cin >> _figure[i]->operator[](j).x >> _figure[i]->operator[](j).y;
+            }
+
+            if (CheckFigure::check(T, *_figure[i])) {
+                std::cout << "Ок, фигура существует, продолжаем..." << std::endl;
+            } else {
+                throw std::exception("Координаты не подходят описанию фигуры... Завершение программы!");
+            }
         }
     } catch (const std::exception& exept) {
-        std::cout << exept.what() << std::endl;
-
-        delete figure_first;
-        delete figure_second;
-
-        return;
+        throw std::exception(exept.what());
     }
-    // ---------------------------------------------------
+}
 
+void Console::dialog() {
     int operation;
 
     do {
-        printMenu();
+        int ID_first = figureID(1);
 
+        printMenu();
         std::cin >> operation;
 
         switch (operation) {
         case 1:
-        {
-            int numberOfFigure;
-            std::cout << "У какой фигуры вычислить площадь? | (1) или (2)\n";
-            std::cin >> numberOfFigure;
-
-            std::cout << "Площадь фигуры:= ";
-            if (numberOfFigure == 1) {
-                std::cout << figure_first->getArea() << std::endl;
-            } else if (numberOfFigure == 2) {
-                std::cout << figure_second->getArea() << std::endl;
-            }
+            area(*_figure[ID_first]);
             break;
-        }
         case 2:
-        {
-            int numberOfFigure;
-            std::cout << "У какой фигуры вычислить центр тяжести? | (1) или (2)\n";
-            std::cin >> numberOfFigure;
-
-            if (numberOfFigure == 1) {
-                Point point = figure_first->getCenterOfGravity();
-                std::cout << point.x << " | " << point.y << std::endl;
-            } else if (numberOfFigure == 2) {
-                Point point = figure_second->getCenterOfGravity();
-                std::cout << point.x << " | " << point.y << std::endl;
-            }
+            centerOfGravity(*_figure[ID_first]);
             break;
-        }
         case 3:
-        {
-            int numberOfFigure;
-            std::cout << "Какую фигуру перевернуть? | (1) или (2)\n";
-            std::cin >> numberOfFigure;
-
-            int degrees;
-            std::cout << "Какой угол поворота фигуры?\n";
-            std::cin >> degrees;
-
-            if (numberOfFigure == 1) {
-                figure_first->rotate(degrees);
-            } else if (numberOfFigure == 2) {
-                figure_second->rotate(degrees);
-            }
+            rotate(*_figure[ID_first]);
             break;
-        }
         case 4:
-        {
-            int numberOfFigure;
-            std::cout << "Какую фигуру передвинуть? | (1) или (2)\n";
-            std::cin >> numberOfFigure;
-
-            Point point;
-            std::cout << "На какие координаты сдвинуть? | (x, y)\n";
-            std::cin >> point.x >> point.y;
-
-            if (numberOfFigure == 1) {
-                figure_first->move(point);
-            } else if (numberOfFigure == 2) {
-                figure_second->move(point);
-            }
+            move(*_figure[ID_first]);
             break;
-        }
         case 5:
         {
-            double area_first = figure_first->getArea();
-            double area_second = figure_second->getArea();
-
-            std::string result = figure_first->compare(area_first, area_second);
-            if (result == "More") {
-                std::cout << "Площадь 1-ой фигуры больше 2-ой\n";
-            } else if (result == "Less") {
-                std::cout << "Площадь 2-ой фигуры больше 1-ой\n";
-            } else if (result == "Same") {
-                std::cout << "Площадь 1-ой фигуры равна площади 2-ой фигуры\n";
-            }
+            int ID_second = figureID(2);
+            compare(*_figure[ID_first], *_figure[ID_second]);
             break;
         }
         case 6:
         {
-            bool result = Operations::isIntersect(*figure_first, *figure_second);
-            if (result) {
-                std::cout << "Фигуры пересекаются\n";
-            } else {
-                std::cout << "Фигуры не пересекаются\n";
-            }
+            int ID_second = figureID(2);
+            intersect(*_figure[ID_first], *_figure[ID_second]);
             break;
         }
         case 7:
         {
-            int id_figure_first, id_figure_second;
-            std::cout << "У каких фигур проверить включение? | (ID первой фигуры, ID второй фигуры)\n";
-            std::cin >> id_figure_first >> id_figure_second;
-
-            bool result = false;
-            if(id_figure_first == 1 && id_figure_second == 2) {
-                result = Operations::isInsertion(*figure_second, *figure_first);
-            } else if(id_figure_first == 2 && id_figure_second == 1) {
-                result = Operations::isInsertion(*figure_first, *figure_second);
-            }
-
-            if (result && !Operations::isIntersect(*figure_first, *figure_second)) {
-                std::cout << "Да, включает!\n";
-            } else {
-                std::cout << "Нет, не включает!\n";
-            }
+            int ID_second = figureID(2);
+            insertion(*_figure[ID_first], *_figure[ID_second]);
             break;
         }
         default:
@@ -185,20 +108,85 @@ void Console::start() {
             break;
         }
     } while (operation);
+}
 
-    delete figure_first;
-    delete figure_second;
+int Console::figureID(int i) const {
+    int ID;
+    std::cout << "\nВведите ID фигуры №" << i << "(какую использовать)?: " << std::endl;
+    std::cin >> ID;
+
+    if (ID < 1 || ID > _count) {
+        throw std::exception("Ошибка ввода ID фигуры... Завершение работы!");
+    }
+
+    return ID - 1;
+}
+
+void Console::area(Shape& figure) const {
+    std::cout << figure.getArea() << std::endl;
+}
+
+void Console::centerOfGravity(const Shape& figure) const {
+    Point point = figure.getCenterOfGravity();
+    std::cout << point.x << " | " << point.y << std::endl;
+}
+
+void Console::rotate(Shape& figure) const {
+    int degrees;
+    std::cout << "Какой угол поворота фигуры?" << std::endl;
+    std::cin >> degrees;
+
+    figure.rotate(degrees);
+}
+
+void Console::move(Shape& figure) const {
+    Point point;
+    std::cout << "На какие координаты сдвинуть? | (x, y)" << std::endl;
+    std::cin >> point.x >> point.y;
+
+    figure.move(point);
+}
+
+void Console::compare(Shape& figure_first, Shape& figure_second) const {
+    double result = figure_first.getArea() - figure_second.getArea();
+
+    if (result > 0) {
+        std::cout << "Площадь 1-ой фигуры больше 2-ой" << std::endl;
+    } else if (result < 0) {
+        std::cout << "Площадь 2-ой фигуры больше 1-ой" << std::endl;
+    } else {
+        std::cout << "Площадь 1-ой фигуры равна площади 2-ой фигуры" << std::endl;
+    }
+}
+
+void Console::intersect(Shape& figure_first, Shape& figure_second) const {
+    bool result = Operations::isIntersect(figure_first, figure_second);
+    if (result) {
+        std::cout << "Фигуры пересекаются" << std::endl;
+    } else {
+        std::cout << "Фигуры не пересекаются" << std::endl;
+    }
+}
+
+void Console::insertion(Shape& figure_first, Shape& figure_second) const {
+    bool result = Operations::isInsertion(figure_second, figure_first);
+
+    if (result && !Operations::isIntersect(figure_first, figure_second)) {
+        std::cout << "Да, включает!" << std::endl;
+    } else {
+        std::cout << "Нет, не включает!" << std::endl;
+    }
 }
 
 void Console::printMenu() {
-    std::cout << "\n-----------------------------\n";
-    std::cout << "1 - Найти площадь\n";
-    std::cout << "2 - Найти центр тяжести\n";
-    std::cout << "3 - Повернуть фигуру\n";
-    std::cout << "4 - Переместить фигуру\n";
-    std::cout << "5 - Сравнить две фигуры (по площади)\n";
-    std::cout << "6 - Пересечение фигур\n";
-    std::cout << "7 - Включение одной фигуры в другую\n";
-    std::cout << "0 - Выход\n";
-    std::cout << "-----------------------------\n";
+    std::cout << "\n-----------------------------" << std::endl;
+    std::cout << "1 - Найти площадь" << std::endl;
+    std::cout << "2 - Найти центр тяжести" << std::endl;
+    std::cout << "3 - Повернуть фигуру" << std::endl;
+    std::cout << "4 - Переместить фигуру" << std::endl;
+    std::cout << "5 - Сравнить две фигуры (по площади)" << std::endl;
+    std::cout << "6 - Пересечение фигур" << std::endl;
+    std::cout << "7 - Включение одной фигуры в другую" << std::endl;
+    std::cout << "0 - Выход" << std::endl;
+    std::cout << "-----------------------------" << std::endl;
 }

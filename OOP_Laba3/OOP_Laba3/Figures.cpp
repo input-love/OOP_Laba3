@@ -1,6 +1,4 @@
 #include "Figures.h"
-#include "Triangle.h"
-#include "Rectangle.h"
 
 Shape::Shape(int count): _numberOfEdges(count), _point(new Point[_numberOfEdges]) {} 
 
@@ -8,26 +6,7 @@ Shape::~Shape() {
 	delete[] _point;
 }
 
-Shape* Shape::createShape(char T) {
-	Shape* shape = nullptr; 
-	switch (T) { 
-	case 'T':
-		{
-		shape = new Triangle();
-		}
-		break;
-	case 'R':
-		{
-		shape = new Rectangle();
-		}
-		break;
-	default:
-		throw std::exception("Некорректный ввод данных");
-	}
-	return shape; 
-}
-
-Point& Shape::getCenterOfGravity() const {
+Point Shape::getCenterOfGravity() const {
 	Point point;
 	for (int i = 0; i < _numberOfEdges; ++i) {
 		point.x += _point[i].x;
@@ -58,18 +37,6 @@ void Shape::move(const Point& point) {
 		_point[i].x += point.x;
 		_point[i].y += point.y;
 	}
-}
-
-std::string Shape::compare(double area_first, double area_second) const {
-	std::string result;
-	if (area_first > area_second) {
-		result = "More";
-	} else if (area_first < area_second) {
-		result = "Less";
-	} else {
-		result = "Same";
-	}
-	return result;
 }
 
 int Shape::getNumberOfEdges() const {
